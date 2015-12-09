@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 shrtlist.com
+ * Copyright 2015 shrtlist.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-#import "Employee.h"
+import CoreData
+import Foundation
 
-@implementation Employee
-
-@dynamic name;
-@dynamic jobTitle;
-@dynamic dateOfBirth;
-@dynamic yearsEmployed;
-@dynamic photo;
-
-@end
+/*
+* Employee managed object class which defines five properties:
+* name, job title, date of birth, number of years employed, and photo.
+*/
+class Employee : NSManagedObject {
+    @NSManaged var name: NSString?
+    @NSManaged var jobTitle: NSString?
+    @NSManaged var dateOfBirth: NSDate?
+    @NSManaged var yearsEmployed: Int32
+    @NSManaged var photo: NSData
+}

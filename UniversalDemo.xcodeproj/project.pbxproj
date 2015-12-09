@@ -8,17 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		57D5A9A118F72EA200B080C8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57D5A9A018F72EA200B080C8 /* Images.xcassets */; };
-		6703C50A1BB1DE17000E789D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6703C5091BB1DE17000E789D /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
-		678FC08A1BB1E33F003CC30B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 678FC0891BB1E33F003CC30B /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
+		6703C50A1BB1DE17000E789D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6703C5091BB1DE17000E789D /* Launch Screen.storyboard */; };
+		678FC08A1BB1E33F003CC30B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 678FC0891BB1E33F003CC30B /* Main.storyboard */; };
+		67A94B7B1C178D2700FD7674 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A94B7A1C178D2700FD7674 /* AppDelegate.swift */; };
+		67A94B7D1C17B5A600FD7674 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A94B7C1C17B5A600FD7674 /* Employee.swift */; };
 		84E3792D14BE0ACC0018998C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E3792C14BE0ACC0018998C /* UIKit.framework */; };
 		84E3792F14BE0ACC0018998C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E3792E14BE0ACC0018998C /* Foundation.framework */; };
 		84E3793314BE0ACC0018998C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E3793214BE0ACC0018998C /* CoreData.framework */; };
 		84E3793914BE0ACC0018998C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84E3793714BE0ACC0018998C /* InfoPlist.strings */; };
 		84E3793B14BE0ACC0018998C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E3793A14BE0ACC0018998C /* main.m */; };
-		84E3793F14BE0ACC0018998C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E3793E14BE0ACC0018998C /* AppDelegate.m */; };
 		84E3794814BE0ACC0018998C /* UniversalDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84E3794614BE0ACC0018998C /* UniversalDemo.xcdatamodeld */; };
 		84E3794B14BE0ACC0018998C /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E3794A14BE0ACC0018998C /* MasterViewController.m */; };
-		84E3795A14BE382E0018998C /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E3795914BE382E0018998C /* Employee.m */; };
 		84E3796A14BF37B50018998C /* EmployeeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E3796914BF37B50018998C /* EmployeeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +37,9 @@
 		6703C5091BB1DE17000E789D /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		678FC0891BB1E33F003CC30B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		678FC08F1BB3084B003CC30B /* UniversalDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UniversalDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		67A94B791C178D2600FD7674 /* UniversalDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UniversalDemo-Bridging-Header.h"; sourceTree = "<group>"; };
+		67A94B7A1C178D2700FD7674 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		67A94B7C1C17B5A600FD7674 /* Employee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
 		84E3792814BE0ACC0018998C /* UniversalDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniversalDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E3792C14BE0ACC0018998C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84E3792E14BE0ACC0018998C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -45,13 +48,9 @@
 		84E3793814BE0ACC0018998C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84E3793A14BE0ACC0018998C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		84E3793C14BE0ACC0018998C /* UniversalDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UniversalDemo-Prefix.pch"; sourceTree = "<group>"; };
-		84E3793D14BE0ACC0018998C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		84E3793E14BE0ACC0018998C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		84E3794714BE0ACC0018998C /* UniversalDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UniversalDemo.xcdatamodel; sourceTree = "<group>"; };
 		84E3794914BE0ACC0018998C /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		84E3794A14BE0ACC0018998C /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		84E3795814BE382E0018998C /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
-		84E3795914BE382E0018998C /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
 		84E3796814BF37B50018998C /* EmployeeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeViewController.h; sourceTree = "<group>"; };
 		84E3796914BF37B50018998C /* EmployeeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,10 +107,8 @@
 		84E3793414BE0ACC0018998C /* SquareDemo */ = {
 			isa = PBXGroup;
 			children = (
-				84E3793D14BE0ACC0018998C /* AppDelegate.h */,
-				84E3793E14BE0ACC0018998C /* AppDelegate.m */,
-				84E3795814BE382E0018998C /* Employee.h */,
-				84E3795914BE382E0018998C /* Employee.m */,
+				67A94B7A1C178D2700FD7674 /* AppDelegate.swift */,
+				67A94B7C1C17B5A600FD7674 /* Employee.swift */,
 				84E3796814BF37B50018998C /* EmployeeViewController.h */,
 				84E3796914BF37B50018998C /* EmployeeViewController.m */,
 				6703C5091BB1DE17000E789D /* Launch Screen.storyboard */,
@@ -120,6 +117,7 @@
 				84E3794A14BE0ACC0018998C /* MasterViewController.m */,
 				84E3794614BE0ACC0018998C /* UniversalDemo.xcdatamodeld */,
 				84E3793514BE0ACC0018998C /* Supporting Files */,
+				67A94B791C178D2600FD7674 /* UniversalDemo-Bridging-Header.h */,
 			);
 			path = SquareDemo;
 			sourceTree = "<group>";
@@ -180,6 +178,7 @@
 		84E3791F14BE0ACC0018998C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = shrtlist.com;
 				TargetAttributes = {
@@ -240,11 +239,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67A94B7B1C178D2700FD7674 /* AppDelegate.swift in Sources */,
+				67A94B7D1C17B5A600FD7674 /* Employee.swift in Sources */,
 				84E3793B14BE0ACC0018998C /* main.m in Sources */,
-				84E3793F14BE0ACC0018998C /* AppDelegate.m in Sources */,
 				84E3794814BE0ACC0018998C /* UniversalDemo.xcdatamodeld in Sources */,
 				84E3794B14BE0ACC0018998C /* MasterViewController.m in Sources */,
-				84E3795A14BE382E0018998C /* Employee.m in Sources */,
 				84E3796A14BF37B50018998C /* EmployeeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,11 +392,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SquareDemo/UniversalDemo-Prefix.pch";
 				INFOPLIST_FILE = "SquareDemo/UniversalDemo-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shrtlist.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = UniversalDemo;
+				SWIFT_OBJC_BRIDGING_HEADER = "SquareDemo/UniversalDemo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -406,11 +409,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SquareDemo/UniversalDemo-Prefix.pch";
 				INFOPLIST_FILE = "SquareDemo/UniversalDemo-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shrtlist.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = UniversalDemo;
+				SWIFT_OBJC_BRIDGING_HEADER = "SquareDemo/UniversalDemo-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -425,6 +431,7 @@
 				678FC0981BB3084B003CC30B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		84E3792214BE0ACC0018998C /* Build configuration list for PBXProject "UniversalDemo" */ = {
 			isa = XCConfigurationList;

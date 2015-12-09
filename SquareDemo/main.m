@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#import "AppDelegate.h"
+#import "UniversalDemo-Swift.h"
 
 int main(int argc, char *argv[])
 {

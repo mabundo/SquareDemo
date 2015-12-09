@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-#import "Employee.h"
+@import UIKit;
+#import "UniversalDemo-Swift.h"
 
 @interface EmployeeViewController : UITableViewController <UISplitViewControllerDelegate>
 
