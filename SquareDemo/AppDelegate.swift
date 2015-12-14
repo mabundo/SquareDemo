@@ -26,12 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     // MARK: Core Data stack
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
-        let storeURL = self.applicationDocumentsDirectory.URLByAppendingPathComponent("UniversalDemo.sqlite")
         
         var _persistentStoreCoordinator: NSPersistentStoreCoordinator?
         
         if let mom = self.managedObjectModel {
             _persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: mom)
+            
+            let storeURL = self.applicationDocumentsDirectory.URLByAppendingPathComponent("UniversalDemo.sqlite")
             
             do {
                 try _persistentStoreCoordinator?.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
@@ -61,20 +62,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return _persistentStoreCoordinator
     }()
 
-    lazy var managedObjectContext: NSManagedObjectContext? = {
-        var moc: NSManagedObjectContext?
-        
-        if let persistentStoreCoordinator = self.persistentStoreCoordinator {
-            moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-            moc?.persistentStoreCoordinator = persistentStoreCoordinator
-        }
+    lazy var managedObjectContext: NSManagedObjectContext = {
+        let moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        moc.persistentStoreCoordinator = self.persistentStoreCoordinator
         return moc
     }()
     
     lazy var managedObjectModel: NSManagedObjectModel? = {
-        let modelURL = NSBundle.mainBundle().URLForResource("UniversalDemo", withExtension: "momd")
-        let mom = NSManagedObjectModel(contentsOfURL: modelURL!)
-        return mom!
+        var mom: NSManagedObjectModel?
+        if let modelURL = NSBundle.mainBundle().URLForResource("UniversalDemo", withExtension: "momd") {
+            mom = NSManagedObjectModel(contentsOfURL: modelURL)
+        }
+        
+        return mom
     }()
 
     // MARK: UIApplicationDelegate protocol conformance
@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let employeeViewController = navigationController.topViewController as! EmployeeViewController
 
         if secondaryViewController.isKindOfClass(UINavigationController) && navigationController.topViewController!.isKindOfClass(EmployeeViewController) && employeeViewController.employee == nil {
-            // Return YES to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
+            // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
             return true
         }
         else {

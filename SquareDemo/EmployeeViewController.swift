@@ -24,7 +24,7 @@ class EmployeeViewController : UITableViewController, UISplitViewControllerDeleg
     @IBOutlet weak var yearsEmployedLabel: UILabel?
     @IBOutlet weak var photoImageView: UIImageView?
     
-    var employee: Employee {
+    var employee: Employee? {
         didSet {
             configureView()
         }

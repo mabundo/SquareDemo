@@ -22,8 +22,8 @@ import Foundation
 * name, job title, date of birth, number of years employed, and photo.
 */
 class Employee : NSManagedObject {
-    @NSManaged var name: NSString?
-    @NSManaged var jobTitle: NSString?
+    @NSManaged var name: String?
+    @NSManaged var jobTitle: String?
     @NSManaged var dateOfBirth: NSDate?
     @NSManaged var yearsEmployed: Int32
     @NSManaged var photo: NSData
