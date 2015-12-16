@@ -16,7 +16,7 @@
 
 import UIKit
 
-class EmployeeViewController : UITableViewController, UISplitViewControllerDelegate {
+class EmployeeViewController : UITableViewController {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var jobTitleLabel: UILabel!
@@ -69,14 +69,14 @@ class EmployeeViewController : UITableViewController, UISplitViewControllerDeleg
 
     // MARK: UISplitViewControllerDelegate protocol conformance
 
-    func splitViewController(svc: UISplitViewController, willHideViewController aViewController: UIViewController, withBarButtonItem barButtonItem: UIBarButtonItem, forPopoverController pc: UIPopoverController) {
-        barButtonItem.title = NSLocalizedString("Employees", comment: "Employees")
-        navigationItem.setLeftBarButtonItem(barButtonItem, animated: true)
-    }
-
-    func splitViewController(svc: UISplitViewController, willShowViewController aViewController: UIViewController, invalidatingBarButtonItem barButtonItem: UIBarButtonItem) {
-        // Called when the view is shown again in the split view.
-        navigationItem.setLeftBarButtonItem(nil, animated: true)
-    }
+//    func splitViewController(svc: UISplitViewController, willHideViewController aViewController: UIViewController, withBarButtonItem barButtonItem: UIBarButtonItem, forPopoverController pc: UIPopoverController) {
+//        barButtonItem.title = NSLocalizedString("Employees", comment: "Employees")
+//        navigationItem.setLeftBarButtonItem(barButtonItem, animated: true)
+//    }
+//
+//    func splitViewController(svc: UISplitViewController, willShowViewController aViewController: UIViewController, invalidatingBarButtonItem barButtonItem: UIBarButtonItem) {
+//        // Called when the view is shown again in the split view.
+//        navigationItem.setLeftBarButtonItem(nil, animated: true)
+//    }
 
 }

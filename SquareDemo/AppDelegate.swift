@@ -82,33 +82,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        let splitViewController = window!.rootViewController as! UISplitViewController
-        var navigationController = splitViewController.viewControllers.last as! UINavigationController
-        navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
+        let splitViewController = window?.rootViewController as! UISplitViewController
         splitViewController.delegate = self
         
-        navigationController = splitViewController.viewControllers.first as! UINavigationController
-        
-        let masterViewController = navigationController.topViewController as! MasterViewController
+        let masterNavigationController = splitViewController.viewControllers.first as! UINavigationController
+        let masterViewController = masterNavigationController.topViewController as! MasterViewController
         masterViewController.managedObjectContext = managedObjectContext
         
-        return true
-    }
-
-    // MARK: UISplitViewControllerDelegate protocol conformance
-
-    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Pad) {
+            let detailNavigationController = splitViewController.viewControllers.last as! UINavigationController
+            detailNavigationController.topViewController?.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
+        }
         
-        let navigationController = secondaryViewController as! UINavigationController
-        let employeeViewController = navigationController.topViewController as! EmployeeViewController
-
-        if secondaryViewController.isKindOfClass(UINavigationController) && navigationController.topViewController!.isKindOfClass(EmployeeViewController) && employeeViewController.employee == nil {
-            // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
-            return true
-        }
-        else {
-            return false
-        }
+        return true
     }
 
     // MARK: Application's Documents directory
@@ -117,6 +103,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         get {
             return NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).last!
         }
+    }
+    
+    // MARK: UISplitViewControllerDelegate protocol conformance
+    
+    func targetDisplayModeForActionInSplitViewController(svc: UISplitViewController) -> UISplitViewControllerDisplayMode {
+        if (svc.displayMode == UISplitViewControllerDisplayMode.PrimaryOverlay || svc.displayMode == UISplitViewControllerDisplayMode.PrimaryHidden) {
+            return UISplitViewControllerDisplayMode.AllVisible
+        }
+        
+        return UISplitViewControllerDisplayMode.PrimaryHidden
     }
 
 }

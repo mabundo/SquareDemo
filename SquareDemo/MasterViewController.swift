@@ -66,6 +66,8 @@ class MasterViewController : UITableViewController, NSFetchedResultsControllerDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = NSLocalizedString("Employees", comment: "Employees")
 
         // Do any additional setup after loading the view, typically from a nib.
         //employeeViewController = (EmployeeViewController *)splitViewController.viewControllers.last] topViewController]
