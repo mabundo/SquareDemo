@@ -36,7 +36,9 @@ class EmployeeViewController : UITableViewController, UISplitViewControllerDeleg
         }
     }
     
-    lazy var shortDateFormatter: NSDateFormatter = {
+    // MARK: Private property
+    
+    private lazy var shortDateFormatter: NSDateFormatter = {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
         return dateFormatter
