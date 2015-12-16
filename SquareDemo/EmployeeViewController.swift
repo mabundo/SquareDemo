@@ -42,15 +42,6 @@ class EmployeeViewController : UITableViewController, UISplitViewControllerDeleg
         return dateFormatter
     }()
 
-    // MARK: View lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view, typically from a nib.
-        configureView()
-    }
-
     // MARK: View configuration
 
     func clearView() {
@@ -72,7 +63,6 @@ class EmployeeViewController : UITableViewController, UISplitViewControllerDeleg
             yearsEmployedLabel.text = String(emp.yearsEmployed)
             photoImageView.image = UIImage(data: emp.photo)
         }
-        
     }
 
     // MARK: UISplitViewControllerDelegate protocol conformance
