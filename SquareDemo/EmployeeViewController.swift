@@ -18,17 +18,29 @@ import UIKit
 
 class EmployeeViewController : UITableViewController, UISplitViewControllerDelegate {
 
-    @IBOutlet weak var nameLabel: UILabel?
-    @IBOutlet weak var jobTitleLabel: UILabel?
-    @IBOutlet weak var dateOfBirthLabel: UILabel?
-    @IBOutlet weak var yearsEmployedLabel: UILabel?
-    @IBOutlet weak var photoImageView: UIImageView?
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var jobTitleLabel: UILabel!
+    @IBOutlet weak var dateOfBirthLabel: UILabel!
+    @IBOutlet weak var yearsEmployedLabel: UILabel!
+    @IBOutlet weak var photoImageView: UIImageView!
     
     var employee: Employee? {
         didSet {
-            configureView()
+            if employee != nil {
+                configureView()
+            }
+            else {
+                clearView()
+            }
+            tableView.reloadData()
         }
     }
+    
+    lazy var shortDateFormatter: NSDateFormatter = {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        return dateFormatter
+    }()
 
     // MARK: View lifecycle
 
@@ -50,31 +62,17 @@ class EmployeeViewController : UITableViewController, UISplitViewControllerDeleg
     }
 
     func configureView() {
-        // Update the user interface for the detail item.
-        
-        if (employee) {
-            nameLabel.text = employee.name
-            jobTitleLabel.text = employee.jobTitle
-
-            let dateFormatter: NSDateFormatter?
+        if let emp = employee {
+            let dateOfBirth = shortDateFormatter.stringFromDate(emp.dateOfBirth)
             
-            if (dateFormatter == nil)
-            {
-                dateFormatter = NSDateFormatter()
-                dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-            }
-            
-            let dateOfBirth = dateFormatter.stringFromDate(employee.dateOfBirth)
-            
+            // Update the user interface for the detail item.
+            nameLabel.text = emp.name
+            jobTitleLabel.text = emp.jobTitle
             dateOfBirthLabel.text = dateOfBirth
-            yearsEmployedLabel.text = NSString(format: "%d", employee.yearsEmployed)
-            photoImageView.image = UIImage(data: employee.photo)
-        }
-        else {
-            clearView()
+            yearsEmployedLabel.text = String(emp.yearsEmployed)
+            photoImageView.image = UIImage(data: emp.photo)
         }
         
-        tableView.reloadData()
     }
 
     // MARK: UISplitViewControllerDelegate protocol conformance

@@ -59,6 +59,8 @@ class MasterViewController : UITableViewController, NSFetchedResultsControllerDe
         
         return _fetchedResultsController
     }()
+    
+    private var selectedEmployee: Employee?
 
     // MARK: View lifecycle
 
@@ -85,13 +87,12 @@ class MasterViewController : UITableViewController, NSFetchedResultsControllerDe
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Check the segue identifier
         if segue.identifier == "showDetail" {
-            let indexPath = tableView.indexPathForSelectedRow
-            let employee = fetchedResultsController?.objectAtIndexPath(indexPath!) as! Employee
-            
             let navigationController = segue.destinationViewController as! UINavigationController
             
             let employeeViewController = navigationController.topViewController as! EmployeeViewController
-            employeeViewController.employee = employee
+            if let _ = employeeViewController.view {
+                employeeViewController.employee = selectedEmployee
+            }
         }
     }
 
@@ -120,9 +121,11 @@ class MasterViewController : UITableViewController, NSFetchedResultsControllerDe
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell")
-
-        // Configure the cell
-        configureCell(cell!, indexPath: indexPath)
+        
+        if let employee = fetchedResultsController?.objectAtIndexPath(indexPath) as! Employee? {
+            // Get the employee from the fetchedResultsController
+            configureCell(cell!, forEmployee: employee)
+        }
 
         return cell!
     }
@@ -153,12 +156,15 @@ class MasterViewController : UITableViewController, NSFetchedResultsControllerDe
     // MARK: UITableViewDelegate protocol conformance
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
-            let employee = fetchedResultsController?.objectAtIndexPath(indexPath) as! Employee
-            
-            // Set the employee to be displayed by the employeeViewController
-            employeeViewController?.employee = employee
+        if (selectedEmployee == nil) {
+            selectedEmployee = fetchedResultsController?.objectAtIndexPath(indexPath) as? Employee
         }
+        else {
+            selectedEmployee = nil
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        }
+        
+        performSegueWithIdentifier("showDetail", sender: self)
     }
 
     // MARK: NSFetchedResultsControllerDelegate protocol conformance
@@ -192,7 +198,7 @@ class MasterViewController : UITableViewController, NSFetchedResultsControllerDe
                 tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
                 
             case NSFetchedResultsChangeType.Update:
-                configureCell(tableView.cellForRowAtIndexPath(indexPath!)!, indexPath: indexPath!)
+                tableView.cellForRowAtIndexPath(indexPath!)
             
             case NSFetchedResultsChangeType.Move:
                 tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
@@ -204,19 +210,15 @@ class MasterViewController : UITableViewController, NSFetchedResultsControllerDe
         tableView.endUpdates()
     }
 
-    // MARK
-    func configureCell(cell: UITableViewCell, indexPath: NSIndexPath) {
-        // Get the employee from the fetchedResultsController
-        if let employee = fetchedResultsController?.objectAtIndexPath(indexPath) as! Employee? {
-            // Set the cell labels with employee info
-            cell.textLabel?.text = employee.name
-            cell.detailTextLabel?.text = employee.jobTitle
-            
-            // Create the UIImage from the employee photo data.
-            let image = UIImage(data: employee.photo)
+    // MARK: Set cell properties with employee info
+    func configureCell(cell: UITableViewCell, forEmployee employee: Employee) {
+        cell.textLabel?.text = employee.name
+        cell.detailTextLabel?.text = employee.jobTitle
+        
+        // Create the UIImage from the employee photo data.
+        let image = UIImage(data: employee.photo)
 
-            cell.imageView?.image = image
-        }
+        cell.imageView?.image = image
     }
 
     // MARK: Data load
@@ -239,90 +241,89 @@ class MasterViewController : UITableViewController, NSFetchedResultsControllerDe
                 
                 if let image = UIImage(named: "icon-default-person") {
                     if let imageData = UIImagePNGRepresentation(image) {
-                
-                    let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "MM/dd/yyyy"
-                    
-                    // Create new managed objects
-                    
-                    let employee1 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
-                    employee1.name = "John Appleseed"
-                    employee1.jobTitle = "Software Engineer - iOS"
-                    employee1.dateOfBirth = dateFormatter.dateFromString("01/26/1978")
-                    employee1.yearsEmployed = 1
-                    employee1.photo = imageData
-                    
-                    let employee2 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
-                    employee2.name = "Ellen Roth"
-                    employee2.jobTitle = "Software Engineer - Android"
-                    employee2.dateOfBirth = dateFormatter.dateFromString("04/15/1985")
-                    employee2.yearsEmployed = 3
-                    employee2.photo = imageData
-                    
-                    let employee3 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
-                    employee3.name = "Zachary Wong"
-                    employee3.jobTitle = "Product Manager"
-                    employee3.dateOfBirth = dateFormatter.dateFromString("11/04/1986")
-                    employee3.yearsEmployed = 2
-                    employee3.photo = imageData
-                    
-                    let employee4 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
-                    employee4.name = "Cynthia Mala"
-                    employee4.jobTitle = "Project Manager"
-                    employee4.dateOfBirth = dateFormatter.dateFromString("03/14/1989")
-                    employee4.yearsEmployed = 2
-                    employee4.photo = imageData
+                        let dateFormatter = NSDateFormatter()
+                        dateFormatter.dateFormat = "MM/dd/yyyy"
+                        
+                        // Create new managed objects
+                        
+                        let employee1 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
+                        employee1.name = "John Appleseed"
+                        employee1.jobTitle = "Software Engineer - iOS"
+                        employee1.dateOfBirth = dateFormatter.dateFromString("01/26/1978")!
+                        employee1.yearsEmployed = 1
+                        employee1.photo = imageData
+                        
+                        let employee2 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
+                        employee2.name = "Ellen Roth"
+                        employee2.jobTitle = "Software Engineer - Android"
+                        employee2.dateOfBirth = dateFormatter.dateFromString("04/15/1985")!
+                        employee2.yearsEmployed = 3
+                        employee2.photo = imageData
+                        
+                        let employee3 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
+                        employee3.name = "Zachary Wong"
+                        employee3.jobTitle = "Product Manager"
+                        employee3.dateOfBirth = dateFormatter.dateFromString("11/04/1986")!
+                        employee3.yearsEmployed = 2
+                        employee3.photo = imageData
+                        
+                        let employee4 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
+                        employee4.name = "Cynthia Mala"
+                        employee4.jobTitle = "Project Manager"
+                        employee4.dateOfBirth = dateFormatter.dateFromString("03/14/1989")!
+                        employee4.yearsEmployed = 2
+                        employee4.photo = imageData
 
-                    let employee5 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
-                    employee5.name = "John Ross"
-                    employee5.jobTitle = "Software Engineer - iOS"
-                    employee5.dateOfBirth = dateFormatter.dateFromString("07/14/1972")
-                    employee5.yearsEmployed = 3
-                    employee5.photo = imageData
-                    
-                    let employee6 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
-                    employee6.name = "Russ Joy"
-                    employee6.jobTitle = "Software Engineer - Android"
-                    employee6.dateOfBirth = dateFormatter.dateFromString("05/24/1985")
-                    employee6.yearsEmployed = 3
-                    employee6.photo = imageData
-                    
-                    let employee7 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
-                    employee7.name = "Suzy Chen"
-                    employee7.jobTitle = "Manager"
-                    employee7.dateOfBirth = dateFormatter.dateFromString("07/14/1972")
-                    employee7.yearsEmployed = 3
-                    employee7.photo = imageData
-                    
-                    let employee8 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
-                    employee8.name = "Vincent Dorn"
-                    employee8.jobTitle = "Software Engineer - iOS"
-                    employee8.dateOfBirth = dateFormatter.dateFromString("07/22/1990")
-                    employee8.yearsEmployed = 1
-                    employee8.photo = imageData
-                    
-                    let employee9 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
-                    employee9.name = "Srini Chagar"
-                    employee9.jobTitle = "Product Manager"
-                    employee9.dateOfBirth = dateFormatter.dateFromString("08/01/1969")
-                    employee9.yearsEmployed = 3
-                    employee9.photo = imageData
-                    
-                    let employee10 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
-                    employee10.name = "Lynn Hopi"
-                    employee10.jobTitle = "Software Engineer - Android"
-                    employee10.dateOfBirth = dateFormatter.dateFromString("02/22/1978")
-                    employee10.yearsEmployed = 3
-                    employee10.photo = imageData
-                    
-                    let employee11 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
-                    employee11.name = "Krista Venkata"
-                    employee11.jobTitle = "Product Manager"
-                    employee11.dateOfBirth = dateFormatter.dateFromString("09/05/1986")
-                    employee11.yearsEmployed = 2
-                    employee11.photo = imageData
-                    
-                    try context.save()
+                        let employee5 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
+                        employee5.name = "John Ross"
+                        employee5.jobTitle = "Software Engineer - iOS"
+                        employee5.dateOfBirth = dateFormatter.dateFromString("07/14/1972")!
+                        employee5.yearsEmployed = 3
+                        employee5.photo = imageData
+                        
+                        let employee6 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
+                        employee6.name = "Russ Joy"
+                        employee6.jobTitle = "Software Engineer - Android"
+                        employee6.dateOfBirth = dateFormatter.dateFromString("05/24/1985")!
+                        employee6.yearsEmployed = 3
+                        employee6.photo = imageData
+                        
+                        let employee7 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
+                        employee7.name = "Suzy Chen"
+                        employee7.jobTitle = "Manager"
+                        employee7.dateOfBirth = dateFormatter.dateFromString("07/14/1972")!
+                        employee7.yearsEmployed = 3
+                        employee7.photo = imageData
+                        
+                        let employee8 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
+                        employee8.name = "Vincent Dorn"
+                        employee8.jobTitle = "Software Engineer - iOS"
+                        employee8.dateOfBirth = dateFormatter.dateFromString("07/22/1990")!
+                        employee8.yearsEmployed = 1
+                        employee8.photo = imageData
+                        
+                        let employee9 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
+                        employee9.name = "Srini Chagar"
+                        employee9.jobTitle = "Product Manager"
+                        employee9.dateOfBirth = dateFormatter.dateFromString("08/01/1969")!
+                        employee9.yearsEmployed = 3
+                        employee9.photo = imageData
+                        
+                        let employee10 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
+                        employee10.name = "Lynn Hopi"
+                        employee10.jobTitle = "Software Engineer - Android"
+                        employee10.dateOfBirth = dateFormatter.dateFromString("02/22/1978")!
+                        employee10.yearsEmployed = 3
+                        employee10.photo = imageData
+                        
+                        let employee11 = NSEntityDescription.insertNewObjectForEntityForName("Employee", inManagedObjectContext: context) as! Employee
+                        employee11.name = "Krista Venkata"
+                        employee11.jobTitle = "Product Manager"
+                        employee11.dateOfBirth = dateFormatter.dateFromString("09/05/1986")!
+                        employee11.yearsEmployed = 2
+                        employee11.photo = imageData
+                        
+                        try context.save()
                     }
                 }
             }

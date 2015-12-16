@@ -113,7 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     // MARK: Application's Documents directory
 
-    var applicationDocumentsDirectory: NSURL {
+    private var applicationDocumentsDirectory: NSURL {
         get {
             return NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).last!
         }
